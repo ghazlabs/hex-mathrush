@@ -15,7 +15,7 @@ CREATE TABLE `choices` (
 
 CREATE TABLE `games` (
   `id` varchar(36)  PRIMARY KEY,
-  `player_name` int NOT NULL,
+  `player_name` varchar(36) NOT NULL,
   `scenario` varchar(20) NOT NULL,
   `score` int NOT NULL,
   `count_correct` int NOT NULL,
