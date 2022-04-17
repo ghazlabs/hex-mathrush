@@ -2,10 +2,8 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -33,15 +31,16 @@ func main() {
 		log.Fatalf("unable to initialize auth due: %v", err)
 	}
 	// load questions data
-	data, err := ioutil.ReadFile("./questions.json")
-	if err != nil {
-		log.Fatalf("unable to open questions data file due: %v", err)
-	}
+	// data, err := ioutil.ReadFile("./questions.json")
+	// if err != nil {
+	// 	log.Fatalf("unable to open questions data file due: %v", err)
+	// }
 	var questions []core.Question
-	err = json.Unmarshal(data, &questions)
-	if err != nil {
-		log.Fatalf("unable to parse questions data file due: %v", err)
-	}
+	// err = json.Unmarshal(data, &questions)
+	// if err != nil {
+	// 	log.Fatalf("unable to parse questions data file due: %v", err)
+	// }
+	questions, err = queststrg.GetQuestions()
 	// initialize question storage
 	questionStorage, err := queststrg.New(queststrg.Config{
 		Questions: questions,

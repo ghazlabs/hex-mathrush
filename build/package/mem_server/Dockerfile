@@ -1,8 +1,14 @@
 FROM golang:1.17.7-alpine3.15 as build
 WORKDIR /go/src/github.com/ghazlabs/hex-mathrush
 
+COPY ./docs/*.sql /docker-entrypoint-initdb.d/
+
 COPY go.mod go.sum ./
 RUN go mod download
+
+ENV DB_PORT 3306
+ENV DB_USER root
+ENV DB_PASS rSq!!2007
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
@@ -14,6 +20,7 @@ RUN apk add ca-certificates tzdata
 COPY --from=build /go/src/github.com/ghazlabs/hex-mathrush/cmd/mem_server/server .
 COPY --from=build /go/src/github.com/ghazlabs/hex-mathrush/cmd/mem_server/questions.json .
 COPY --from=build /go/src/github.com/ghazlabs/hex-mathrush/cmd/mem_server/web ./web
+
 
 EXPOSE 9190
 

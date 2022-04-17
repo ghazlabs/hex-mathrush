@@ -11,35 +11,7 @@ import (
 
 func TestGetRandomQuestion(t *testing.T) {
 	// initialize questions
-	questions := []core.Question{
-		{
-			Problem: "1 + 2",
-			Choices: []string{
-				"3",
-				"4",
-				"5",
-			},
-			CorrectIndex: 1,
-		},
-		{
-			Problem: "2 + 2",
-			Choices: []string{
-				"3",
-				"4",
-				"5",
-			},
-			CorrectIndex: 2,
-		},
-		{
-			Problem: "3 + 2",
-			Choices: []string{
-				"3",
-				"4",
-				"5",
-			},
-			CorrectIndex: 3,
-		},
-	}
+	questions := queststrg.GetQuestions()
 
 	// initialize storage
 	questStrg, err := New(Config{
