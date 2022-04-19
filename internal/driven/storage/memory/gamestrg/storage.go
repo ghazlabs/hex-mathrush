@@ -43,37 +43,3 @@ func conn() *sql.DB {
 	}
 	return db
 }
-
-func GetState() (*Storage, error) {
-	games := New()
-	db := conn()
-	defer db.Close()
-
-	rows, err := db.Query("SELECT id,player_name,scenario,score,count_correct,question_id,question_timeout FROM games")
-	if err != nil {
-		panic(err.Error())
-	}
-
-	questions, err := queststrg.GetQuestions()
-
-	if err != nil {
-		panic(err.Error())
-	}
-
-	for rows.Next() {
-		game := new(core.Game)
-		t := new(quest)
-		to := new(core.TimedQuestion)
-		err := rows.Scan(&game.GameID, &game.PlayerName, &game.Scenario, &game.Score, &game.CountCorrect, &t.id, &t.to)
-
-		if err != nil {
-			panic(err.Error())
-		}
-		to.Question = questions[t.id]
-		to.Timeout = t.to
-		game.CurrentQuestion = to
-
-		games.PutGame(nil, *game)
-	}
-	return games, nil
-}

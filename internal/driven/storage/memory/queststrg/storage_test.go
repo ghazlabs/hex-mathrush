@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/ghazlabs/hex-mathrush/internal/core"
+	"github.com/ghazlabs/hex-mathrush/internal/driven/storage/memory/queststrg"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
