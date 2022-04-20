@@ -40,7 +40,6 @@ func main() {
 	// if err != nil {
 	// 	log.Fatalf("unable to parse questions data file due: %v", err)
 	// }
-	questions, err = queststrg.GetQuestions()
 	// initialize question storage
 	questionStorage, err := queststrg.New(queststrg.Config{
 		Questions: questions,

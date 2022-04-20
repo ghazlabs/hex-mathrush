@@ -29,11 +29,15 @@ func New(cfg Config) (*Storage, error) {
 	if err != nil {
 		return nil, err
 	}
-	qs, err := GetQuestions()
 	if err != nil {
 		panic(err.Error())
 	}
-	return &Storage{questions: qs}, nil
+	var s Storage
+	err = s.Init()
+	if err != nil {
+		panic(err.Error())
+	}
+	return &s, nil
 }
 
 func conn() *sql.DB {
@@ -49,7 +53,7 @@ func conn() *sql.DB {
 	return db
 }
 
-func GetQuestions() ([]core.Question, error) {
+func (s *Storage) Init() error {
 	var quests []core.Question
 	db := conn()
 	defer db.Close()
@@ -83,8 +87,8 @@ func GetQuestions() ([]core.Question, error) {
 
 		quests = append(quests, q)
 	}
-
-	return quests, nil
+	s.questions = quests
+	return nil
 }
 
 func (s *Storage) GetRandomQuestion(ctx context.Context) (*core.Question, error) {

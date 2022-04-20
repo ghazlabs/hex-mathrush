@@ -4,24 +4,24 @@ import (
 	"context"
 	"testing"
 
-	"github.com/ghazlabs/hex-mathrush/internal/driven/storage/memory/queststrg"
+	"github.com/ghazlabs/hex-mathrush/internal/core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestGetRandomQuestion(t *testing.T) {
 	// initialize questions
-	questions := queststrg.GetQuestions()
-
+	var qs []core.Question
 	// initialize storage
-	questStrg, err := New(Config{
-		Questions: questions,
+	strg, err := New(Config{
+		Questions: qs,
 	})
 	require.NoError(t, err)
+	err = strg.Init()
 	// test the get random question function
-	question, err := questStrg.GetRandomQuestion(context.Background())
+	question, err := strg.GetRandomQuestion(context.Background())
 	require.NoError(t, err)
 
 	// make sure that question is part of questions
-	assert.Contains(t, questions, *question, "the question is out of questions list")
+	assert.Contains(t, strg, &question, "the question is out of questions list")
 }
